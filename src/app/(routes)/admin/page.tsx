@@ -1,3 +1,4 @@
+import Announcement from "@/components/admin/Announcement";
 import AttendanceChart from "@/components/admin/AttendanceChart";
 import CountChart from "@/components/admin/CountChart";
 import EventCalendar from "@/components/admin/EventCalendar";
@@ -30,6 +31,7 @@ function AdminPage() {
     
       <div className="w-full lg:w-1/3">
         <EventCalendar />
+        <Announcement />
       </div>
     </div>
   );

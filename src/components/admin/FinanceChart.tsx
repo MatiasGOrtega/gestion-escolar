@@ -1,5 +1,5 @@
 "use client";
-import { TrendingUp } from "lucide-react";
+import { Ellipsis } from "lucide-react";
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import {
   Card,
@@ -42,9 +42,9 @@ function FinanceChart() {
   return (
     <Card className="p-4 w-full h-full border-none">
       <CardHeader className="flex flex-row justify-between items-center p-0">
-        <CardTitle>Area Chart - Axes</CardTitle>
+        <CardTitle>Finance</CardTitle>
         <CardDescription>
-          Showing total visitors for the last 6 months
+          <Ellipsis className="w-6 h-6" />
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -91,16 +91,16 @@ function FinanceChart() {
           </AreaChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter>
-        <div className="flex w-full items-start gap-2 text-sm">
-          <div className="grid gap-2">
-            <div className="flex items-center gap-2 font-medium leading-none">
-              Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-            </div>
-            <div className="flex items-center gap-2 leading-none text-muted-foreground">
-              January - June 2024
-            </div>
-          </div>
+      <CardFooter className="flex justify-center gap-16">
+        <div className="">
+          <div className="w-5 h-5 bg-sky-200 rounded-full" />
+          <h1 className="font-bold">285</h1>
+          <h2 className="text-xs text-gray-300">Income</h2>
+        </div>
+        <div className="">
+          <div className="w-5 h-5 bg-yellow-200 rounded-full" />
+          <h1 className="font-bold">220</h1>
+          <h2 className="text-xs text-gray-300">Expense</h2>
         </div>
       </CardFooter>
     </Card>

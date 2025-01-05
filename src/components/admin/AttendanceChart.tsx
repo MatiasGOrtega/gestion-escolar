@@ -46,7 +46,7 @@ function AttendanceChart() {
         </CardDescription>
       </CardHeader>
       <CardContent className="w-full h-full p-0">
-        <ChartContainer config={chartConfig} className="mx-auto w-full h-full">
+        <ChartContainer config={chartConfig} className="mx-auto w-full">
           <BarChart accessibilityLayer data={chartData}>
             <CartesianGrid vertical={false} />
             <XAxis
@@ -67,11 +67,11 @@ function AttendanceChart() {
       </CardContent>
       <CardFooter className="flex justify-center items-center gap-4">
         <div className="flex items-center gap-2">
-          <div className="w-5 h-5 bg-sky-200 rounded-full" />
+          <div className="w-3 h-3 bg-sky-200 rounded-full" />
           <h2 className="text-sky-300">Absent</h2>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-5 h-5 bg-yellow-200 rounded-full" />
+          <div className="w-3 h-3 bg-yellow-200 rounded-full" />
           <h2 className="text-yellow-300">Present</h2>
         </div>
       </CardFooter>
