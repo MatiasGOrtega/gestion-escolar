@@ -36,8 +36,8 @@ const chartConfig = {
 } satisfies ChartConfig;
 function CountChart() {
   return (
-    <Card className="flex flex-col p-4 w-full h-full border-none">
-      <CardHeader className="flex flex-row justify-between items-center">
+    <Card className="p-4 w-full h-full border-none">
+      <CardHeader className="flex flex-row justify-between items-center p-0">
         <CardTitle>Students</CardTitle>
         <CardDescription>
           <Ellipsis className="w-6 h-6" />
@@ -46,12 +46,12 @@ function CountChart() {
       <CardContent className="relative w-full h-[75%] p-0">
         <ChartContainer
           config={chartConfig}
-          className="mx-auto aspect-square"
+          className="mx-auto aspect-square w-full h-full"
         >
           <RadialBarChart
             data={chartData}
-            innerRadius={60}
-            outerRadius={120}
+            innerRadius={50}
+            outerRadius={100}
             barSize={32}
           >
             <ChartTooltip
