@@ -1,6 +1,6 @@
 "use client"
 
-import { Calendar } from "@/components/ui/calendar"
+import Calendar from "react-calendar"
 import { useState } from "react"
 
 const events = [
@@ -30,20 +30,22 @@ const events = [
   },
 ]
 
+type ValuePiece = Date | null;
+
+type Value = ValuePiece | [ValuePiece, ValuePiece];
+
 function EventCalendar() {
-  const [date, setDate] = useState<Date | undefined>(new Date())
+  const [date, setDate] = useState<Value>(new Date())
 
   return (
     <div>
       <Calendar
-        mode="single"
-        selected={date}
-        onSelect={setDate}
+        onChange={setDate}
+        value={date}
         className="rounded shadow react-calendar"
       />
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-semibold my-4">Events</h1>
-
       </div>
       <div className="flex flex-col gap-4">
         {events.map((event)=> (

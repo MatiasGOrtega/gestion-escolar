@@ -1,7 +1,7 @@
-import Announcement from "@/components/admin/Announcement";
+import Announcement from "@/components/Announcement";
 import AttendanceChart from "@/components/admin/AttendanceChart";
 import CountChart from "@/components/admin/CountChart";
-import EventCalendar from "@/components/admin/EventCalendar";
+import EventCalendar from "@/components/EventCalendar";
 import FinanceChart from "@/components/admin/FinanceChart";
 import UserCard from "@/components/admin/UserCard";
 import React from "react";
@@ -29,7 +29,7 @@ function AdminPage() {
         </div>
       </div>
     
-      <div className="w-full lg:w-1/3">
+      <div className="w-full lg:w-1/3 flex flex-col gap-8">
         <EventCalendar />
         <Announcement />
       </div>

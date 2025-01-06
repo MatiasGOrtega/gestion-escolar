@@ -6,42 +6,6 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.react-calendar{
-  & table {
-    width: 100%;
-    & thead tr{
-      display: flex;
-      justify-content: space-between;
-    }
-    & tbody tr{
-      display: flex;
-      justify-content: space-between;
-    }
-
-    & tbody tr td {
-      & button {
-        background-color: #bae6fd;
-
-        &:hover {
-          background-color: #bae6fd;
-        }
-    
-        &:focus {
-          background-color: #0e79b3;
-        }
-      }
-    }
-  }
-}
-
-.react-calendar div:first-child {
-  width: 100%;
-}
-
-.react-calendar #react-day-picker-1 {
-  text-align: center;
-}
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -121,4 +85,168 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.react-calendar {
+  width: 100% !important;
+  border: none !important;
+  font-family: "Inter", sans-serif !important;
+}
+
+.react-calendar__navigation{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2px;
+  gap: 10px;
+
+  & :hover {
+    background-color: #c3ebfa;
+  }
+}
+
+.react-calendar__month-view__days__day{
+  padding: 8px;
+  text-align: center;
+}
+
+.react-calendar__navigation__label__labelText {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.react-calendar__month-view__weekdays__weekday,
+.react-calendar__month-view__weekdays__weekday--weekend{
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 10px;
+}
+
+.react-calendar__month-view__days__day--weekend{
+  color: #f44336;
+}
+
+.react-calendar__month-view__weekdays__weekday--weekend{
+  color: #f44336;
+}
+
+.react-calendar__navigation__prev2-button,
+.react-calendar__navigation__next2-button {
+  border: none;
+  border-radius: 20%;
+  padding: 5px;
+  cursor: pointer;
+
+  & :hover {
+    background-color: #c3ebfa;
+  }
+}
+
+.react-calendar__navigation__prev-button,
+.react-calendar__navigation__next-button {
+  border: none;
+  border-radius: 20%;
+  padding: 5px;
+  cursor: pointer;
+
+  & :hover {
+    background-color: #c3ebfa;
+  }
+}
+
+.react-calendar__tile--active {
+  background-color: #c3ebfa !important;
+  color: black !important;
+}
+
+.rbc-btn-group:first-child {
+  display: none !important;
+}
+
+.rbc-toolbar-label {
+  text-align: right !important;
+  padding: 0px 20px !important;
+}
+
+.rbc-btn-group:last-child {
+  font-size: 13px !important;
+}
+
+.rbc-btn-group:last-child button {
+  border: none !important;
+  background-color: #f1f0ff !important;
+  margin-left: 2px !important;
+}
+
+.rbc-toolbar button .rbc-active {
+  background-color: #dbdafe !important;
+  box-shadow: none !important;
+}
+
+.rbc-time-view {
+  border-color: #eee !important;
+}
+
+.rbc-time-header {
+  display: none !important;
+}
+
+.rbc-time-content {
+  border: none !important;
+}
+
+.rbc-time-gutter.rbc-time-column {
+  font-size: 12px !important;
+}
+
+.rbc-time-gutter.rbc-time-column .rbc-timeslot-group {
+  padding: 0px 20px !important;
+}
+
+.rbc-timeslot-group {
+  background-color: #f7fdff !important;
+}
+
+.rbc-day-slot {
+  font-size: 14px !important;
+}
+
+.rbc-event {
+  border: none !important;
+  color: black !important;
+  padding: 10px !important;
+  margin: 10px !important;
+  width: 99% !important;
+}
+
+.rbc-event:nth-child(1) {
+  background-color: #e2f8ff !important;
+}
+.rbc-event:nth-child(2) {
+  background-color: #fefce8 !important;
+}
+.rbc-event:nth-child(3) {
+  background-color: #f2f1ff !important;
+}
+.rbc-event:nth-child(4) {
+  background-color: #fdf2fb !important;
+}
+.rbc-event:nth-child(5) {
+  background-color: #e2f8ff !important;
+}
+.rbc-event:nth-child(6) {
+  background-color: #fefce8 !important;
+}
+.rbc-event:nth-child(7) {
+  background-color: #f2f1ff !important;
+}
+.rbc-event:nth-child(8) {
+  background-color: #fdf2fb !important;
+}
+
+.rbc-event-label{
+  color: gray !important;
+  margin-bottom: 5px;
 }
