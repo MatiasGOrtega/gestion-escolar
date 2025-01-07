@@ -1,5 +1,5 @@
 import Announcement from '@/components/Announcement';
-import BigCalendar from '@/components/student/BigCalendar';
+import BigCalendar from '@/components/BigCalendar';
 
 function ParentPage() {
   return (

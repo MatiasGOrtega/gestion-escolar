@@ -1,6 +1,6 @@
 import Announcement from "@/components/Announcement";
 import EventCalendar from "@/components/EventCalendar";
-import BigCalendar from "@/components/student/BigCalendar";
+import BigCalendar from "@/components/BigCalendar";
 
 function StudentPage() {
   return (
