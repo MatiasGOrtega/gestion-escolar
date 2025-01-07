@@ -53,12 +53,12 @@ export const menuMainItems = [
     href: "/list/assignments",
     visible: ["admin", "teacher", "student", "parent"],
   },
-  // {
-  //   icon: "/icon/result.svg",
-  //   label: "Results",
-  //   href: "/list/results",
-  //   visible: ["admin", "teacher", "student", "parent"],
-  // },
+  {
+    icon: "/icon/result.svg",
+    label: "Results",
+    href: "/list/results",
+    visible: ["admin", "teacher", "student", "parent"],
+  },
   {
     icon: "/icon/attendance.svg",
     label: "Attendance",

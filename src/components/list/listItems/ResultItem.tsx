@@ -4,30 +4,29 @@ import { role } from "@/constants/data";
 import { EditIcon, TrashIcon } from "lucide-react";
 import Link from "next/link";
 
-type Parent = {
+type Result = {
   id: number;
-  name: string;
-  email?: string;
-  students: string[];
-  phone: string;
-  address: string;
+  subject: string;
+  class: string;
+  teacher: string;
+  student: string;
+  type: "exam" | "assignment";
+  date: string;
+  score: number;
 };
 
-function ParentItem(parent: Parent) {
+function ResultItem(result: Result) {
   return (
-    <TableRow key={parent.id}>
-      <TableCell className="flex items-center gap-2">
-        <div className="flex flex-col">
-          <h3 className="font-semibold">{parent.name}</h3>
-          <p className="text-xs text-gray-500">{parent?.email}</p>
-        </div>
-      </TableCell>
-      <TableCell className="hidden md:table-cell">{parent.students.join(', ')}</TableCell>
-      <TableCell className="hidden md:table-cell">{parent.phone}</TableCell>
-      <TableCell className="hidden lg:table-cell">{parent.address}</TableCell>
+    <TableRow key={result.id}>
+      <TableCell>{result.subject}</TableCell>
+      <TableCell className="hidden md:table-cell">{result.student}</TableCell>
+      <TableCell className="hidden md:table-cell">{result.score}</TableCell>
+      <TableCell className="hidden md:table-cell">{result.teacher}</TableCell>
+      <TableCell className="hidden md:table-cell">{result.class}</TableCell>
+      <TableCell className="hidden md:table-cell">{result.date}</TableCell>
       <TableCell className="flex items-center gap-2">
         <Link
-          href={`/list/parents/${parent.id}`}
+          href={`/list/results/${result.id}`}
           className={`${buttonVariants({
             variant: "outline",
             size: "icon",
@@ -49,4 +48,4 @@ function ParentItem(parent: Parent) {
   );
 }
 
-export default ParentItem
+export default ResultItem;

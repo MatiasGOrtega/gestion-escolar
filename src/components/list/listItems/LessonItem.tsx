@@ -4,30 +4,22 @@ import { role } from "@/constants/data";
 import { EditIcon, TrashIcon } from "lucide-react";
 import Link from "next/link";
 
-type Parent = {
+type Lesson = {
   id: number;
-  name: string;
-  email?: string;
-  students: string[];
-  phone: string;
-  address: string;
+  subject: string;
+  class: string;
+  teacher: string;
 };
 
-function ParentItem(parent: Parent) {
+function LessonItem(lesson: Lesson) {
   return (
-    <TableRow key={parent.id}>
-      <TableCell className="flex items-center gap-2">
-        <div className="flex flex-col">
-          <h3 className="font-semibold">{parent.name}</h3>
-          <p className="text-xs text-gray-500">{parent?.email}</p>
-        </div>
-      </TableCell>
-      <TableCell className="hidden md:table-cell">{parent.students.join(', ')}</TableCell>
-      <TableCell className="hidden md:table-cell">{parent.phone}</TableCell>
-      <TableCell className="hidden lg:table-cell">{parent.address}</TableCell>
+    <TableRow key={lesson.id}>
+      <TableCell>{lesson.subject}</TableCell>
+      <TableCell className="hidden md:table-cell">{lesson.class}</TableCell>
+      <TableCell className="hidden md:table-cell">{lesson.teacher}</TableCell>
       <TableCell className="flex items-center gap-2">
         <Link
-          href={`/list/parents/${parent.id}`}
+          href={`/list/lessons/${lesson.id}`}
           className={`${buttonVariants({
             variant: "outline",
             size: "icon",
@@ -49,4 +41,4 @@ function ParentItem(parent: Parent) {
   );
 }
 
-export default ParentItem
+export default LessonItem;

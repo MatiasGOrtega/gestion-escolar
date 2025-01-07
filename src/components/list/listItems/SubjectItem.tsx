@@ -13,15 +13,13 @@ type Subject = {
 function SubjectItem(subject: Subject) {
   return (
     <TableRow key={subject.id}>
-      <TableCell className="flex items-center gap-2">
-        <h3 className="font-semibold">{subject.name}</h3>
-      </TableCell>
+      <TableCell>{subject.name}</TableCell>
       <TableCell className="hidden md:table-cell">
         {subject.teachers.join(", ")}
       </TableCell>
       <TableCell className="flex items-center gap-2">
         <Link
-          href={`/list/students/${subject.id}`}
+          href={`/list/subjects/${subject.id}`}
           className={`${buttonVariants({
             variant: "outline",
             size: "icon",
