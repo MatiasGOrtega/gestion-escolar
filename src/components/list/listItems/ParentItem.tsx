@@ -1,8 +1,7 @@
-import { Button, buttonVariants } from "@/components/ui/button";
+import FormModal from "@/components/FormModal";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { role } from "@/constants/data";
 import { EditIcon, TrashIcon } from "lucide-react";
-import Link from "next/link";
 
 type Parent = {
   id: number;
@@ -22,31 +21,25 @@ function ParentItem(parent: Parent) {
           <p className="text-xs text-gray-500">{parent?.email}</p>
         </div>
       </TableCell>
-      <TableCell className="hidden md:table-cell">{parent.students.join(', ')}</TableCell>
+      <TableCell className="hidden md:table-cell">
+        {parent.students.join(", ")}
+      </TableCell>
       <TableCell className="hidden md:table-cell">{parent.phone}</TableCell>
       <TableCell className="hidden lg:table-cell">{parent.address}</TableCell>
       <TableCell className="flex items-center gap-2">
-        <Link
-          href={`/list/parents/${parent.id}`}
-          className={`${buttonVariants({
-            variant: "outline",
-            size: "icon",
-          })} bg-yellow-200 hover:bg-yellow-300`}
-        >
-          <EditIcon className="w-4 h-4" />
-        </Link>
         {role === "admin" && (
-          <Button
-            variant="outline"
-            size="icon"
-            className="bg-purple-200 hover:bg-purple-300"
-          >
-            <TrashIcon className="w-4 h-4" />
-          </Button>
+          <>
+            <FormModal table="parent" type="update" data={parent}>
+              <EditIcon className="w-4 h-4" />
+            </FormModal>
+            <FormModal table="parent" type="delete" id={parent.id}>
+              <TrashIcon className="w-4 h-4" />
+            </FormModal>
+          </>
         )}
       </TableCell>
     </TableRow>
   );
 }
 
-export default ParentItem
+export default ParentItem;

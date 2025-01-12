@@ -1,8 +1,7 @@
-import { Button, buttonVariants } from "@/components/ui/button";
+import FormModal from "@/components/FormModal";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { role } from "@/constants/data";
 import { EditIcon, TrashIcon } from "lucide-react";
-import Link from "next/link";
 
 type Class = {
   id: number;
@@ -24,23 +23,15 @@ function ClassItem(classItem: Class) {
         {classItem.supervisor}
       </TableCell>
       <TableCell className="flex items-center gap-2">
-        <Link
-          href={`/list/students/${classItem.id}`}
-          className={`${buttonVariants({
-            variant: "outline",
-            size: "icon",
-          })} bg-yellow-200 hover:bg-yellow-300`}
-        >
-          <EditIcon className="w-4 h-4" />
-        </Link>
         {role === "admin" && (
-          <Button
-            variant="outline"
-            size="icon"
-            className="bg-purple-200 hover:bg-purple-300"
-          >
-            <TrashIcon className="w-4 h-4" />
-          </Button>
+          <>
+            <FormModal table="class" type="update" data={classItem}>
+              <EditIcon className="w-4 h-4" />
+            </FormModal>
+            <FormModal table="class" type="delete" id={classItem.id}>
+              <TrashIcon className="w-4 h-4" />
+            </FormModal>
+          </>
         )}
       </TableCell>
     </TableRow>

@@ -1,8 +1,7 @@
-import { Button, buttonVariants } from "@/components/ui/button";
+import FormModal from "@/components/FormModal";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { role } from "@/constants/data";
 import { EditIcon, TrashIcon } from "lucide-react";
-import Link from "next/link";
 
 type Event = {
   id: number;
@@ -22,23 +21,15 @@ function EventItem(event: Event) {
       <TableCell className="hidden md:table-cell">{event.startTime}</TableCell>
       <TableCell className="hidden md:table-cell">{event.endTime}</TableCell>
       <TableCell className="flex items-center gap-2">
-        <Link
-          href={`/list/events/${event.id}`}
-          className={`${buttonVariants({
-            variant: "outline",
-            size: "icon",
-          })} bg-yellow-200 hover:bg-yellow-300`}
-        >
-          <EditIcon className="w-4 h-4" />
-        </Link>
         {role === "admin" && (
-          <Button
-            variant="outline"
-            size="icon"
-            className="bg-purple-200 hover:bg-purple-300"
-          >
-            <TrashIcon className="w-4 h-4" />
-          </Button>
+          <>
+            <FormModal table="event" type="update" data={event}>
+              <EditIcon className="w-4 h-4" />
+            </FormModal>
+            <FormModal table="event" type="delete" id={event.id}>
+              <TrashIcon className="w-4 h-4" />
+            </FormModal>
+          </>
         )}
       </TableCell>
     </TableRow>
