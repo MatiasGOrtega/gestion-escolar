@@ -1,12 +1,8 @@
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { role } from "@/constants/data";
-import {
-  CalendarDays,
-  Mail,
-  Phone,
-  Syringe,
-} from "lucide-react";
+import { CalendarDays, Mail, Phone, Syringe } from "lucide-react";
 import Image from "next/image";
+import FormModal from "../FormModal";
 
 function CardTeacherInfo() {
   return (
@@ -24,7 +20,26 @@ function CardTeacherInfo() {
           <CardTitle className="text-2xl font-semibold">
             Leonard Snyder
           </CardTitle>
-          {role === "admin" && "HOLA"}
+          {role === "admin" && (
+            <FormModal
+              table="teacher"
+              type="update"
+              data={{
+                id: 1,
+                username: "deanguerrero",
+                email: "deanguerrero@gmail.com",
+                password: "password",
+                firstName: "Dean",
+                lastName: "Guerrero",
+                phone: "+1 234 567 89",
+                address: "1234 Main St, Anytown, USA",
+                bloodType: "A+",
+                dateOfBirth: "2000-01-01",
+                sex: "male",
+                img: "https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=1200",
+              }}
+            />
+          )}
         </div>
         <p className="text-sm text-gray-500">
           Lorem ipsum, dolor sit amet consectetur adipisicing elit.
