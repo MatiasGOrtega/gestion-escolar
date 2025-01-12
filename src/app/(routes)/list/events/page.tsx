@@ -37,7 +37,7 @@ const columns = [
 function Page() {
   return (
     <div className="p-4 rounded-md flex-1 m-4 mt-0">
-      <TableTop nameTable="All Events" />
+      <TableTop table="event" nameTable="All Events" />
 
       <TableList
         nameTable="A list of events"

@@ -43,7 +43,7 @@ const columns = [
 function Page() {
   return (
     <div className="p-4 rounded-md flex-1 m-4 mt-0">
-      <TableTop nameTable="All Teachers" />
+      <TableTop table="teacher" nameTable="All Teachers" />
 
       <TableList
         nameTable="A list of teachers"

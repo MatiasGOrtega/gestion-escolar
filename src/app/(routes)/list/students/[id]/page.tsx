@@ -2,7 +2,7 @@ import Performance from "@/components/admin/Performance";
 import Announcement from "@/components/Announcement";
 import BigCalendar from "@/components/BigCalendar";
 import CardStudentInfo from "@/components/student/CardStudentInfo";
-import CardCharacteristic from "@/components/teacher/CardCharacteristic";
+import CardCharacteristic from "@/components/CardCharacteristic";
 import { buttonVariants } from "@/components/ui/button";
 import { Link } from "lucide-react";
 

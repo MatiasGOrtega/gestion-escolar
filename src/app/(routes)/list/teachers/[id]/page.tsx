@@ -1,5 +1,5 @@
 import BigCalendar from "@/components/BigCalendar";
-import CardCharacteristic from "@/components/teacher/CardCharacteristic";
+import CardCharacteristic from "@/components/CardCharacteristic";
 import Link from "next/link";
 import CardTeacherInfo from "@/components/teacher/CardTeacherInfo";
 import { buttonVariants } from "@/components/ui/button";

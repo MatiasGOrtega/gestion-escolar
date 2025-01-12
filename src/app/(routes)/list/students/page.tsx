@@ -38,7 +38,7 @@ const columns = [
 function Page() {
   return (
     <div className="p-4 rounded-md flex-1 m-4 mt-0">
-      <TableTop nameTable="All students" />
+      <TableTop table="student" nameTable="All students" />
 
       <TableList
         nameTable="A list of students"
