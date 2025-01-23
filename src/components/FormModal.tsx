@@ -51,7 +51,7 @@ type FormModalProps = {
     | "announcement";
   type: "create" | "update" | "delete";
   data?: any;
-  id?: number;
+  id?: string | number;
   children?: React.ReactNode;
 };
 

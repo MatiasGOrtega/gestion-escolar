@@ -1,27 +1,18 @@
 import FormModal from "@/components/FormModal";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { role } from "@/constants/data";
+import { Class, Subject, Teacher } from "@prisma/client";
 import { EditIcon, TrashIcon } from "lucide-react";
 import Image from "next/image";
 
-type Teacher = {
-  id: number;
-  teacherId: string;
-  name: string;
-  email?: string;
-  photo: string;
-  phone: string;
-  subjects: string[];
-  classes: string[];
-  address: string;
-};
+type TeacherItemProps = Teacher & { subjects: Subject[] } & { classes: Class[] };
 
-function TeacherItem(teacher: Teacher) {
+function TeacherItem(teacher: TeacherItemProps) {
   return (
     <TableRow key={teacher.id}>
       <TableCell className="flex items-center gap-2">
         <Image
-          src={teacher.photo}
+          src={teacher.img || "/avatar-default.png"}
           alt={teacher.name}
           width={40}
           height={40}
@@ -33,13 +24,13 @@ function TeacherItem(teacher: Teacher) {
         </div>
       </TableCell>
       <TableCell className="hidden md:table-cell">
-        {teacher.teacherId}
+        {teacher.username}
       </TableCell>
       <TableCell className="hidden md:table-cell">
-        {teacher.subjects.join(", ")}
+        {teacher.subjects.map((subject)=>subject.name).join(", ")}
       </TableCell>
       <TableCell className="hidden md:table-cell">
-        {teacher.classes.join(", ")}
+        {teacher.classes.map((className)=>className.name).join(", ")}
       </TableCell>
       <TableCell className="hidden lg:table-cell">{teacher.phone}</TableCell>
       <TableCell className="hidden lg:table-cell">{teacher.address}</TableCell>

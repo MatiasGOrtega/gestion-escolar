@@ -1,8 +1,8 @@
 import PaginationList from "@/components/list/PaginationList";
 import TableList from "@/components/list/TableList";
-import { teachersData } from "@/constants/data";
 import TeacherItem from "@/components/list/listItems/TeacherItem";
 import TableTop from "@/components/list/TableTop";
+import { getTeachers } from "@/actions/teacher.action";
 
 const columns = [
   {
@@ -40,7 +40,10 @@ const columns = [
   },
 ];
 
-function Page() {
+type SearchParams = { [key: string]: string | undefined }
+
+async function Page(props: {searchParams: SearchParams}) {
+  const { data, count, p } = await getTeachers(props.searchParams);
   return (
     <div className="p-4 rounded-md flex-1 m-4 mt-0">
       <TableTop table="teacher" nameTable="All Teachers" />
@@ -48,11 +51,11 @@ function Page() {
       <TableList
         nameTable="A list of teachers"
         columns={columns}
-        data={teachersData}
+        data={data}
         item={TeacherItem}
       />
 
-      <PaginationList />
+      <PaginationList page={p} count={count}/>
     </div>
   );
 }
