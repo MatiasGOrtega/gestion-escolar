@@ -4,7 +4,8 @@ import BigCalendar from "@/components/BigCalendar";
 import CardStudentInfo from "@/components/student/CardStudentInfo";
 import CardCharacteristic from "@/components/CardCharacteristic";
 import { buttonVariants } from "@/components/ui/button";
-import { Link } from "lucide-react";
+import Link from "next/link";
+
 
 function Page() {
   return (
@@ -48,17 +49,17 @@ function Page() {
               href="/"
               className={`${buttonVariants({
                 variant: "outline",
-              })} p-3 rounded-md bg-sky-50 shadow hover:bg-sky-200`}
+              })} rounded-md bg-sky-50 shadow hover:bg-sky-200`}
             >
-              Teacher&apos;s Classes
+              Student&apos;s Lessons
             </Link>
             <Link
-              href="/"
+              href={`/list/teachers?classId=${2}`}
               className={`${buttonVariants({
                 variant: "outline",
               })} p-3 rounded-md bg-purple-50 shadow hover:bg-purple-200`}
             >
-              Teacher&apos;s Students
+              Student&apos;s Teachers
             </Link>
             <Link
               href="/"
@@ -66,7 +67,7 @@ function Page() {
                 variant: "outline",
               })} p-3 rounded-md bg-yellow-50 shadow hover:bg-yellow-200`}
             >
-              Teacher&apos;s Lessons
+              Student&apos;s Exams
             </Link>
             <Link
               href="/"
@@ -74,7 +75,7 @@ function Page() {
                 variant: "outline",
               })} p-3 rounded-md bg-pink-50 shadow hover:bg-pink-200`}
             >
-              Teacher&apos;s Exams
+              Student&apos;s Assignments
             </Link>
             <Link
               href="/"
@@ -82,7 +83,7 @@ function Page() {
                 variant: "outline",
               })} p-3 rounded-md bg-sky-50 shadow hover:bg-sky-200`}
             >
-              Teacher&apos;s Assignments
+              Student&apos;s Results
             </Link>
           </div>
         </div>

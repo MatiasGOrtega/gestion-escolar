@@ -1,8 +1,8 @@
 import PaginationList from "@/components/list/PaginationList";
 import TableList from "@/components/list/TableList";
-import { studentsData } from "@/constants/data";
 import TableTop from "@/components/list/TableTop";
 import StudentItem from "@/components/list/listItems/StudentItem";
+import { getStudents } from "@/actions/student.action";
 
 const columns = [
   {
@@ -35,7 +35,11 @@ const columns = [
   },
 ];
 
-function Page() {
+type SearchParams = Promise<{ [key: string]: string | undefined }>;
+
+async function Page(props: { searchParams: SearchParams }) {
+  const { data, count, p } = await getStudents(props.searchParams);
+  
   return (
     <div className="p-4 rounded-md flex-1 m-4 mt-0">
       <TableTop table="student" nameTable="All students" />
@@ -43,11 +47,11 @@ function Page() {
       <TableList
         nameTable="A list of students"
         columns={columns}
-        data={studentsData}
+        data={data}
         item={StudentItem}
       />
 
-      <PaginationList />
+      <PaginationList page={p} count={count} />
     </div>
   );
 }
