@@ -1,8 +1,8 @@
-import ClassItem from '@/components/list/listItems/ClassItem';
-import PaginationList from '@/components/list/PaginationList';
-import TableList from '@/components/list/TableList';
-import TableTop from '@/components/list/TableTop';
-import { classesData } from '@/constants/data';
+import { getClasses } from "@/actions/class.action";
+import ClassItem from "@/components/list/listItems/ClassItem";
+import PaginationList from "@/components/list/PaginationList";
+import TableList from "@/components/list/TableList";
+import TableTop from "@/components/list/TableTop";
 
 const columns = [
   {
@@ -30,7 +30,11 @@ const columns = [
   },
 ];
 
-function Page() {
+type SearchParams = Promise<{ [key: string]: string | undefined }>;
+
+async function Page(props: { searchParams: SearchParams }) {
+  const { data, count, p } = await getClasses(props.searchParams);
+
   return (
     <div className="p-4 rounded-md flex-1 m-4 mt-0">
       <TableTop table="class" nameTable="All Classes" />
@@ -38,13 +42,13 @@ function Page() {
       <TableList
         nameTable="A list of classes"
         columns={columns}
-        data={classesData}
+        data={data}
         item={ClassItem}
       />
 
-      <PaginationList />
+      <PaginationList page={p} count={count}/>
     </div>
   );
 }
 
-export default Page
+export default Page;
