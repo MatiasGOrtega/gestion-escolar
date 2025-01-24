@@ -19,7 +19,7 @@ type FormProps = {
   type: string;
   table: string;
   data?: Data;
-  id?: number;
+  id?: number | string ;
   forms: {
     [key: string]: (type: "create" | "update", data?: Data) => JSX.Element;
   };

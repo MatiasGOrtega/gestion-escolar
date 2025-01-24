@@ -2,7 +2,6 @@
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
 } from "@/components/ui/pagination";
 import { ITEM_PER_PAGE } from "@/lib/settings";
@@ -32,9 +31,6 @@ function PaginationList({ page, count }: { page: number; count: number }) {
             </PaginationItem>
           );
         })}
-        <PaginationItem>
-          <PaginationEllipsis />
-        </PaginationItem>
         <PaginationItem>
           <Button
             asChild

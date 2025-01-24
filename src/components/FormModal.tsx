@@ -70,10 +70,7 @@ function FormModal({ table, type, data, id, children }: FormModalProps) {
       <Button
         variant="outline"
         size="icon"
-        className={clsx(
-          "flex items-center justify-center",
-          bgColor,
-        )}
+        className={clsx("flex items-center justify-center", bgColor)}
         onClick={() => setOpen(true)}
       >
         {children}
