@@ -1,18 +1,12 @@
 import FormModal from "@/components/FormModal";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { role } from "@/constants/data";
+import { Parent, Student } from "@prisma/client";
 import { EditIcon, TrashIcon } from "lucide-react";
 
-type Parent = {
-  id: number;
-  name: string;
-  email?: string;
-  students: string[];
-  phone: string;
-  address: string;
-};
+type ParentItemProps = Parent & { students: Student[] };
 
-function ParentItem(parent: Parent) {
+function ParentItem(parent: ParentItemProps) {
   return (
     <TableRow key={parent.id}>
       <TableCell className="flex items-center gap-2">
@@ -22,7 +16,7 @@ function ParentItem(parent: Parent) {
         </div>
       </TableCell>
       <TableCell className="hidden md:table-cell">
-        {parent.students.join(", ")}
+        {parent.students.map((student) => student.name).join(", ")}
       </TableCell>
       <TableCell className="hidden md:table-cell">{parent.phone}</TableCell>
       <TableCell className="hidden lg:table-cell">{parent.address}</TableCell>

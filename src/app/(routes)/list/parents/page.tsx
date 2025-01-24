@@ -1,8 +1,8 @@
 import PaginationList from "@/components/list/PaginationList";
 import TableList from "@/components/list/TableList";
-import { parentsData } from "@/constants/data";
 import TableTop from "@/components/list/TableTop";
 import ParentItem from "@/components/list/listItems/ParentItem";
+import { getParents } from "@/actions/parent.actions";
 
 const columns = [
   {
@@ -30,7 +30,11 @@ const columns = [
   },
 ];
 
-function Page() {
+type SearchParams = Promise<{ [key: string]: string | undefined }>
+
+async function Page(props: {searchParams: SearchParams}) {
+    const { data, count, p } = await getParents(props.searchParams);
+  
   return (
     <div className="p-4 rounded-md flex-1 m-4 mt-0">
       <TableTop table="parent" nameTable="All parents" />
@@ -38,11 +42,11 @@ function Page() {
       <TableList
         nameTable="A list of parents"
         columns={columns}
-        data={parentsData}
+        data={data}
         item={ParentItem}
       />
 
-      <PaginationList />
+      <PaginationList page={p} count={count} />
     </div>
   );
 }
