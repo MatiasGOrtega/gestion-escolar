@@ -1,20 +1,17 @@
 import FormModal from "@/components/FormModal";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { role } from "@/constants/data";
+import { Subject, Teacher } from "@prisma/client";
 import { EditIcon, TrashIcon } from "lucide-react";
 
-type Subject = {
-  id: number;
-  name: string;
-  teachers: string[];
-};
+type SubjectItemProps = Subject & { teachers: Teacher[] };
 
-function SubjectItem(subject: Subject) {
+function SubjectItem(subject: SubjectItemProps) {
   return (
     <TableRow key={subject.id}>
       <TableCell>{subject.name}</TableCell>
       <TableCell className="hidden md:table-cell">
-        {subject.teachers.join(", ")}
+        {subject.teachers.map((teacher) => teacher.name).join(", ")}
       </TableCell>
       <TableCell className="flex items-center gap-2">
         {role === "admin" && (

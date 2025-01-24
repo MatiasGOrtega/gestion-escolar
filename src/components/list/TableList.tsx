@@ -47,7 +47,7 @@ function TableList({
       <TableFooter>
         <TableRow>
           <TableCell colSpan={7} className="text-right">
-            <span className="text-gray-500">Showing 1 to 10 of 20 entries</span>
+            <span className="text-gray-500">Showing 1 to 10 </span>
           </TableCell>
         </TableRow>
       </TableFooter>

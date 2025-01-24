@@ -1,9 +1,8 @@
-import SubjectItem from '@/components/list/listItems/SubjectItem';
-import PaginationList from '@/components/list/PaginationList';
-import TableList from '@/components/list/TableList';
-import TableTop from '@/components/list/TableTop';
-import { subjectsData } from '@/constants/data';
-
+import { getSubjects } from "@/actions/subject.actions";
+import SubjectItem from "@/components/list/listItems/SubjectItem";
+import PaginationList from "@/components/list/PaginationList";
+import TableList from "@/components/list/TableList";
+import TableTop from "@/components/list/TableTop";
 
 const columns = [
   {
@@ -21,7 +20,11 @@ const columns = [
   },
 ];
 
-function Page() {
+type SearchParams = Promise<{ [key: string]: string | undefined }>;
+
+async function Page(props: { searchParams: SearchParams }) {
+  const { data, count, p } = await getSubjects(props.searchParams);
+
   return (
     <div className="p-4 rounded-md flex-1 m-4 mt-0">
       <TableTop table="subject" nameTable="All subjects" />
@@ -29,13 +32,13 @@ function Page() {
       <TableList
         nameTable="A list of subjects"
         columns={columns}
-        data={subjectsData}
+        data={data}
         item={SubjectItem}
       />
 
-      <PaginationList />
+      <PaginationList page={p} count={count} />
     </div>
   );
 }
 
-export default Page
+export default Page;
