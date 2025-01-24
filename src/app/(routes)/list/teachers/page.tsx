@@ -40,10 +40,11 @@ const columns = [
   },
 ];
 
-type SearchParams = { [key: string]: string | undefined }
+type SearchParams = Promise<{ [key: string]: string | undefined }>
 
 async function Page(props: {searchParams: SearchParams}) {
   const { data, count, p } = await getTeachers(props.searchParams);
+  
   return (
     <div className="p-4 rounded-md flex-1 m-4 mt-0">
       <TableTop table="teacher" nameTable="All Teachers" />

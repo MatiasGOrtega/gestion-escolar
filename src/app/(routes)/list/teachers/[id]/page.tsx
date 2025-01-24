@@ -53,7 +53,7 @@ function Page() {
               Teacher&apos;s Classes
             </Link>
             <Link
-              href="/"
+              href={`/list/students?teacherId=${"teacher2"}`}
               className={`${buttonVariants({
                 variant: "outline",
               })} p-3 rounded-md bg-purple-50 shadow hover:bg-purple-200`}
