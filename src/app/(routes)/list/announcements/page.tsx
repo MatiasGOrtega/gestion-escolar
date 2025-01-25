@@ -1,8 +1,8 @@
-import AnnouncementItem from '@/components/list/listItems/AnnouncementItem';
-import PaginationList from '@/components/list/PaginationList';
-import TableList from '@/components/list/TableList';
-import TableTop from '@/components/list/TableTop';
-import { announcementsData } from '@/constants/data';
+import { getAnnouncements } from "@/actions/announcements.action";
+import AnnouncementItem from "@/components/list/listItems/AnnouncementItem";
+import PaginationList from "@/components/list/PaginationList";
+import TableList from "@/components/list/TableList";
+import TableTop from "@/components/list/TableTop";
 
 const columns = [
   {
@@ -24,7 +24,11 @@ const columns = [
   },
 ];
 
-function Page() {
+type SearchParams = Promise<{ [key: string]: string | undefined }>;
+
+async function Page(props: { searchParams: SearchParams }) {
+  const { data, count, p } = await getAnnouncements(props.searchParams);
+
   return (
     <div className="p-4 rounded-md flex-1 m-4 mt-0">
       <TableTop table="announcement" nameTable="All Announcements" />
@@ -32,13 +36,13 @@ function Page() {
       <TableList
         nameTable="A list of announcements"
         columns={columns}
-        data={announcementsData}
+        data={data}
         item={AnnouncementItem}
       />
 
-      <PaginationList />
+      <PaginationList page={p} count={count} />
     </div>
-  )
+  );
 }
 
-export default Page
+export default Page;

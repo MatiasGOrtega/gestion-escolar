@@ -1,24 +1,20 @@
 import FormModal from "@/components/FormModal";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { role } from "@/constants/data";
+import { Announcement, Class } from "@prisma/client";
 import { EditIcon, TrashIcon } from "lucide-react";
 
-type Announcement = {
-  id: number;
-  title: string;
-  class: string;
-  date: string;
-};
+type AnnouncementItemProps = Announcement & { class: Class };
 
-function AnnouncementItem(announcement: Announcement) {
+function AnnouncementItem(announcement: AnnouncementItemProps) {
   return (
     <TableRow key={announcement.id}>
       <TableCell>{announcement.title}</TableCell>
       <TableCell className="hidden md:table-cell">
-        {announcement.class}
+        {announcement.class.name}
       </TableCell>
       <TableCell className="hidden md:table-cell">
-        {announcement.date}
+        {new Intl.DateTimeFormat("en-US").format(new Date(announcement.date))}
       </TableCell>
       <TableCell className="flex items-center gap-2">
         {role === "admin" && (
