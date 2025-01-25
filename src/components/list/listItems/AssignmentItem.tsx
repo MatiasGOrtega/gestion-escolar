@@ -1,26 +1,31 @@
 import FormModal from "@/components/FormModal";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { role } from "@/constants/data";
+import { Assignment, Class, Subject, Teacher } from "@prisma/client";
 import { EditIcon, TrashIcon } from "lucide-react";
 
-type Assignment = {
-  id: number;
-  subject: string;
-  class: string;
-  teacher: string;
-  dueDate: string;
+type AssignmentItemProps = Assignment & {
+  lesson: {
+    subject: Subject;
+    class: Class;
+    teacher: Teacher;
+  };
 };
 
-function AssignmentItem(assignment: Assignment) {
+function AssignmentItem(assignment: AssignmentItemProps) {
   return (
     <TableRow key={assignment.id}>
-      <TableCell>{assignment.subject}</TableCell>
-      <TableCell className="hidden md:table-cell">{assignment.class}</TableCell>
+      <TableCell>{assignment.lesson.subject.name}</TableCell>
       <TableCell className="hidden md:table-cell">
-        {assignment.teacher}
+        {assignment.lesson.class.name}
+      </TableCell>
+      <TableCell className="hidden md:table-cell">
+        {assignment.lesson.teacher.name +
+          " " +
+          assignment.lesson.teacher.surname}
       </TableCell>
       <TableCell className="hidden lg:table-cell">
-        {assignment.dueDate}
+        {new Intl.DateTimeFormat("en-US").format(new Date(assignment.dueDate))}
       </TableCell>
       <TableCell className="flex items-center gap-2">
         {role === "admin" && (
