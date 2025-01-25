@@ -1,25 +1,33 @@
 import FormModal from "@/components/FormModal";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { role } from "@/constants/data";
+import { Class, Event } from "@prisma/client";
 import { EditIcon, TrashIcon } from "lucide-react";
 
-type Event = {
-  id: number;
-  title: string;
-  class: string;
-  date: string;
-  startTime: string;
-  endTime: string;
-};
+type EventItemProps = Event & { class: Class };
 
-function EventItem(event: Event) {
+function EventItem(event: EventItemProps) {
   return (
     <TableRow key={event.id}>
       <TableCell>{event.title}</TableCell>
-      <TableCell className="hidden md:table-cell">{event.class}</TableCell>
-      <TableCell className="hidden md:table-cell">{event.date}</TableCell>
-      <TableCell className="hidden md:table-cell">{event.startTime}</TableCell>
-      <TableCell className="hidden md:table-cell">{event.endTime}</TableCell>
+      <TableCell className="hidden md:table-cell">{event.class.name}</TableCell>
+      <TableCell className="hidden md:table-cell">
+        {new Intl.DateTimeFormat("en-US").format(event.startTime)}
+      </TableCell>
+      <TableCell className="hidden md:table-cell">
+        {event.startTime.toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+        })}
+      </TableCell>
+      <TableCell className="hidden md:table-cell">
+        {event.endTime.toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+        })}
+      </TableCell>
       <TableCell className="flex items-center gap-2">
         {role === "admin" && (
           <>
