@@ -46,7 +46,7 @@ function Page() {
           <h1 className="text-xl font-semibold">Shortcuts</h1>
           <div className="mt-4 flex gap-4 flex-wrap text-xs text-gray-500">
             <Link
-              href="/"
+              href={`/list/lessons?classId=${2}`}
               className={`${buttonVariants({
                 variant: "outline",
               })} rounded-md bg-sky-50 shadow hover:bg-sky-200`}
@@ -62,7 +62,7 @@ function Page() {
               Student&apos;s Teachers
             </Link>
             <Link
-              href="/"
+              href={`/list/exams?classId=${2}`}
               className={`${buttonVariants({
                 variant: "outline",
               })} p-3 rounded-md bg-yellow-50 shadow hover:bg-yellow-200`}
@@ -70,7 +70,7 @@ function Page() {
               Student&apos;s Exams
             </Link>
             <Link
-              href="/"
+              href={`/list/assignments?classId=${2}`}
               className={`${buttonVariants({
                 variant: "outline",
               })} p-3 rounded-md bg-pink-50 shadow hover:bg-pink-200`}
@@ -78,7 +78,7 @@ function Page() {
               Student&apos;s Assignments
             </Link>
             <Link
-              href="/"
+              href={`/list/results?classId=${"student2"}`}
               className={`${buttonVariants({
                 variant: "outline",
               })} p-3 rounded-md bg-sky-50 shadow hover:bg-sky-200`}

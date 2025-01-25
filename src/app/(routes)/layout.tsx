@@ -10,7 +10,7 @@ export default function DashboardLayout({
   return (
     <SidebarProvider>
       <AppSidebar />
-      <div className="w-full overflow-scroll flex flex-col">
+      <div className="w-full overflow-visible flex flex-col">
         <NavBar />
         {children}
       </div>
