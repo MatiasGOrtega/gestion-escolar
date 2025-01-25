@@ -3,26 +3,33 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import { role } from "@/constants/data";
 import { EditIcon, TrashIcon } from "lucide-react";
 
-type Result = {
+type ResultItemProps = {
   id: number;
-  subject: string;
-  class: string;
-  teacher: string;
-  student: string;
-  type: "exam" | "assignment";
-  date: string;
+  title: string;
+  studentName: string;
+  studentSurname: string;
+  teacherName: string;
+  teacherSurname: string;
   score: number;
+  className: string;
+  startTime: Date;
 };
 
-function ResultItem(result: Result) {
+function ResultItem(result: ResultItemProps) {
   return (
     <TableRow key={result.id}>
-      <TableCell>{result.subject}</TableCell>
-      <TableCell className="hidden md:table-cell">{result.student}</TableCell>
+      <TableCell>{result.title}</TableCell>
+      <TableCell className="hidden md:table-cell">
+        {result.studentName + " " + result.studentSurname}
+      </TableCell>
       <TableCell className="hidden md:table-cell">{result.score}</TableCell>
-      <TableCell className="hidden md:table-cell">{result.teacher}</TableCell>
-      <TableCell className="hidden md:table-cell">{result.class}</TableCell>
-      <TableCell className="hidden md:table-cell">{result.date}</TableCell>
+      <TableCell className="hidden md:table-cell">
+        {result.teacherName + " " + result.teacherSurname}
+      </TableCell>
+      <TableCell className="hidden md:table-cell">{result.className}</TableCell>
+      <TableCell className="hidden md:table-cell">
+        {new Intl.DateTimeFormat("en-US").format(new Date(result.startTime))}
+      </TableCell>
       <TableCell className="flex items-center gap-2">
         {role === "admin" && (
           <>

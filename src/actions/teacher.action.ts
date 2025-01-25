@@ -27,13 +27,13 @@ export async function getTeachers(
             case "classId":
               query.lessons = {
                 some: {
-                  classId: parseInt(value as string),
+                  classId: parseInt(value),
                 },
               };
               break;
             case "search":
               query.name = {
-                contains: value as string,
+                contains: value,
                 mode: "insensitive",
               };
               break;

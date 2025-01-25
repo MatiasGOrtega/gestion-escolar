@@ -1,8 +1,8 @@
+import { getResults } from '@/actions/result.action';
 import ResultItem from '@/components/list/listItems/ResultItem';
 import PaginationList from '@/components/list/PaginationList';
 import TableList from '@/components/list/TableList';
 import TableTop from '@/components/list/TableTop';
-import { resultsData } from '@/constants/data';
 
 const columns = [
   {
@@ -39,7 +39,11 @@ const columns = [
   },
 ];
 
-function Page() {
+type SearchParams = Promise<{ [key: string]: string | undefined }>;
+
+async function Page(props: { searchParams: SearchParams }) {
+  const { data, count, p } = await getResults(props.searchParams);
+
   return (
     <div className="p-4 rounded-md flex-1 m-4 mt-0">
       <TableTop table="result" nameTable="All Results" />
@@ -47,11 +51,11 @@ function Page() {
       <TableList
         nameTable="A list of results"
         columns={columns}
-        data={resultsData}
+        data={data}
         item={ResultItem}
       />
 
-      <PaginationList />
+      <PaginationList page={p} count={count}/>
     </div>
   )
 }
