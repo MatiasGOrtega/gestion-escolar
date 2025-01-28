@@ -1,12 +1,14 @@
 import FormModal from "@/components/FormModal";
 import { TableCell, TableRow } from "@/components/ui/table";
-import { role } from "@/constants/data";
+import { auth } from "@clerk/nextjs/server";
 import { Parent, Student } from "@prisma/client";
 import { EditIcon, TrashIcon } from "lucide-react";
 
 type ParentItemProps = Parent & { students: Student[] };
 
-function ParentItem(parent: ParentItemProps) {
+async function ParentItem(parent: ParentItemProps) {
+  const { sessionClaims } = await auth();
+  const role = (sessionClaims?.metadata as { role?: string })?.role;
   return (
     <TableRow key={parent.id}>
       <TableCell className="flex items-center gap-2">

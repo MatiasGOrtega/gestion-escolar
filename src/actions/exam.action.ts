@@ -1,6 +1,7 @@
 "use server";
 import { prisma } from "@/lib/prisma";
 import { ITEM_PER_PAGE } from "@/lib/settings";
+import { auth } from "@clerk/nextjs/server";
 import { Exam, Prisma } from "@prisma/client";
 
 type SearchParams = Promise<{ [key: string]: string | undefined }>;
@@ -17,26 +18,27 @@ export async function getExams(
   try {
     const { page, ...queryParams } = await searchParams;
     const p = page ? parseInt(page) : 1;
-
+    const { userId, sessionClaims } = await auth();
+    const role = (sessionClaims?.metadata as { role?: string })?.role;
     const query: Prisma.ExamWhereInput = {};
+
+    query.lesson = {};
 
     if (queryParams) {
       for (const [key, value] of Object.entries(queryParams)) {
         if (value !== undefined) {
           switch (key) {
             case "classId":
-              query.lesson = { classId: parseInt(value) };
+              query.lesson.classId = parseInt(value);
               break;
             case "teacherId":
-              query.lesson = { teacherId: value };
+              query.lesson.teacherId = value;
               break;
             case "search":
-              query.lesson = {
-                subject: {
-                  name: {
-                    contains: value,
-                    mode: "insensitive",
-                  },
+              query.lesson.subject = {
+                name: {
+                  contains: value,
+                  mode: "insensitive",
                 },
               };
               break;
@@ -45,6 +47,34 @@ export async function getExams(
           }
         }
       }
+    }
+
+    switch (role) {
+      case "admin":
+        break;
+      case "teacher":
+        query.lesson.teacherId = userId!;
+        break;
+      case "student":
+        query.lesson.class = {
+          students: {
+            some: {
+              id: userId!,
+            },
+          },
+        };
+        break;
+      case "parent":
+        query.lesson.class = {
+          students: {
+            some: {
+              parentId: userId!,
+            },
+          },
+        };
+        break;
+      default:
+        break;
     }
 
     const [data, count] = await prisma.$transaction([

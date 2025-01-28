@@ -1,12 +1,14 @@
 import FormModal from "@/components/FormModal";
 import { TableCell, TableRow } from "@/components/ui/table";
-import { role } from "@/constants/data";
+import { auth } from "@clerk/nextjs/server";
 import { Subject, Teacher } from "@prisma/client";
 import { EditIcon, TrashIcon } from "lucide-react";
 
 type SubjectItemProps = Subject & { teachers: Teacher[] };
 
-function SubjectItem(subject: SubjectItemProps) {
+async function SubjectItem(subject: SubjectItemProps) {
+  const { sessionClaims } = await auth();
+  const role = (sessionClaims?.metadata as { role?: string })?.role;
   return (
     <TableRow key={subject.id}>
       <TableCell>{subject.name}</TableCell>

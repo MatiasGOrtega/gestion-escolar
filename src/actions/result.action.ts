@@ -1,6 +1,7 @@
 "use server";
 import { prisma } from "@/lib/prisma";
 import { ITEM_PER_PAGE } from "@/lib/settings";
+import { auth } from "@clerk/nextjs/server";
 import { Prisma } from "@prisma/client";
 
 type SearchParams = Promise<{ [key: string]: string | undefined }>;
@@ -29,7 +30,8 @@ export async function getResults(
   try {
     const { page, ...queryParams } = await searchParams;
     const p = page ? parseInt(page) : 1;
-
+    const { userId, sessionClaims } = await auth();
+    const role = (sessionClaims?.metadata as { role?: string })?.role;
     const query: Prisma.ResultWhereInput = {};
 
     if (queryParams) {
@@ -64,6 +66,40 @@ export async function getResults(
           }
         }
       }
+    }
+
+    switch (role) {
+      case "admin":
+        break;
+      case "teacher":
+        query.OR = [
+          {
+            exam: {
+              lesson: {
+                teacherId: userId!,
+              },
+            },
+          },
+          {
+            assignment: {
+              lesson: {
+                teacherId: userId!,
+              },
+            },
+          },
+        ];
+        break;
+      case "student":
+        query.studentId = userId!;
+        break;
+      case "parent":
+        query.student = {
+          parentId: userId!,
+        };
+        break;
+
+      default:
+        break;
     }
 
     const [dataRes, count] = await prisma.$transaction([

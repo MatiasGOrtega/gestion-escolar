@@ -1,6 +1,6 @@
 import FormModal from "@/components/FormModal";
 import { TableCell, TableRow } from "@/components/ui/table";
-import { role } from "@/constants/data";
+import { auth } from "@clerk/nextjs/server";
 import { Class, Exam, Subject, Teacher } from "@prisma/client";
 import { EditIcon, TrashIcon } from "lucide-react";
 
@@ -12,7 +12,9 @@ type ExamItemProps = Exam & {
   };
 };
 
-function ExamItem(exam: ExamItemProps) {
+async function ExamItem(exam: ExamItemProps) {
+  const { sessionClaims } = await auth();
+  const role = (sessionClaims?.metadata as { role?: string })?.role;
   return (
     <TableRow key={exam.id}>
       <TableCell className="flex items-center gap-2">
@@ -28,7 +30,7 @@ function ExamItem(exam: ExamItemProps) {
         {new Intl.DateTimeFormat("en-US").format(exam.startTime)}
       </TableCell>
       <TableCell className="flex items-center gap-2">
-        {role === "admin" && (
+        {(role === "admin" || role === "teacher") && (
           <>
             <FormModal table="exam" type="update" data={exam}>
               <EditIcon className="w-4 h-4" />

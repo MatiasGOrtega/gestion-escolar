@@ -1,17 +1,20 @@
 import FormModal from "@/components/FormModal";
 import { TableCell, TableRow } from "@/components/ui/table";
-import { role } from "@/constants/data";
+import { auth } from "@clerk/nextjs/server";
 import { Announcement, Class } from "@prisma/client";
 import { EditIcon, TrashIcon } from "lucide-react";
 
 type AnnouncementItemProps = Announcement & { class: Class };
 
-function AnnouncementItem(announcement: AnnouncementItemProps) {
+async function AnnouncementItem(announcement: AnnouncementItemProps) {
+  const { sessionClaims } = await auth();
+  const role = (sessionClaims?.metadata as { role?: string })?.role;
+
   return (
     <TableRow key={announcement.id}>
       <TableCell>{announcement.title}</TableCell>
       <TableCell className="hidden md:table-cell">
-        {announcement.class.name}
+        {announcement.class?.name || "-"}
       </TableCell>
       <TableCell className="hidden md:table-cell">
         {new Intl.DateTimeFormat("en-US").format(new Date(announcement.date))}

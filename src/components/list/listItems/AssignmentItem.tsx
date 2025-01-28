@@ -1,6 +1,6 @@
 import FormModal from "@/components/FormModal";
 import { TableCell, TableRow } from "@/components/ui/table";
-import { role } from "@/constants/data";
+import { auth } from "@clerk/nextjs/server";
 import { Assignment, Class, Subject, Teacher } from "@prisma/client";
 import { EditIcon, TrashIcon } from "lucide-react";
 
@@ -12,7 +12,9 @@ type AssignmentItemProps = Assignment & {
   };
 };
 
-function AssignmentItem(assignment: AssignmentItemProps) {
+async function AssignmentItem(assignment: AssignmentItemProps) {
+  const { sessionClaims } = await auth();
+  const role = (sessionClaims?.metadata as { role?: string })?.role;
   return (
     <TableRow key={assignment.id}>
       <TableCell>{assignment.lesson.subject.name}</TableCell>

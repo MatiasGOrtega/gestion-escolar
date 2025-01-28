@@ -1,6 +1,6 @@
 import FormModal from "@/components/FormModal";
 import { TableCell, TableRow } from "@/components/ui/table";
-import { role } from "@/constants/data";
+import { auth } from "@clerk/nextjs/server";
 import { EditIcon, TrashIcon } from "lucide-react";
 
 type ResultItemProps = {
@@ -15,7 +15,9 @@ type ResultItemProps = {
   startTime: Date;
 };
 
-function ResultItem(result: ResultItemProps) {
+async function ResultItem(result: ResultItemProps) {
+  const { sessionClaims } = await auth();
+  const role = (sessionClaims?.metadata as { role?: string })?.role;
   return (
     <TableRow key={result.id}>
       <TableCell>{result.title}</TableCell>
@@ -31,7 +33,7 @@ function ResultItem(result: ResultItemProps) {
         {new Intl.DateTimeFormat("en-US").format(new Date(result.startTime))}
       </TableCell>
       <TableCell className="flex items-center gap-2">
-        {role === "admin" && (
+        {(role === "admin" || role === "teacher") && (
           <>
             <FormModal table="result" type="update" data={result}>
               <EditIcon className="w-4 h-4" />

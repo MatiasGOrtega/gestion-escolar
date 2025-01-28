@@ -1,6 +1,7 @@
 "use server";
 import { prisma } from "@/lib/prisma";
 import { ITEM_PER_PAGE } from "@/lib/settings";
+import { auth } from "@clerk/nextjs/server";
 import { Event, Prisma } from "@prisma/client";
 
 type SearchParams = Promise<{ [key: string]: string | undefined }>;
@@ -17,7 +18,8 @@ export async function getEvents(
   try {
     const { page, ...queryParams } = await searchParams;
     const p = page ? parseInt(page) : 1;
-
+    const { userId, sessionClaims } = await auth();
+    const role = (sessionClaims?.metadata as { role?: string })?.role;
     const query: Prisma.EventWhereInput = {};
 
     if (queryParams) {
@@ -36,6 +38,39 @@ export async function getEvents(
         }
       }
     }
+
+    const roleConditions = {
+      teacher: {
+        lessons: {
+          some: {
+            teacherId: userId!,
+          },
+        },
+      },
+      student: {
+        students: {
+          some: {
+            id: userId!,
+          },
+        },
+      },
+      parent: {
+        students: {
+          some: {
+            parentId: userId!,
+          },
+        },
+      },
+    };
+
+    query.OR = [
+      {
+        classId: null,
+      },
+      {
+        class: roleConditions[role as keyof typeof roleConditions] || {},
+      },
+    ];
 
     const [data, count] = await prisma.$transaction([
       prisma.event.findMany({

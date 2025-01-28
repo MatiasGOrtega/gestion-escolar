@@ -1,19 +1,23 @@
 import FormModal from "@/components/FormModal";
 import { TableCell, TableRow } from "@/components/ui/table";
-import { role } from "@/constants/data";
+import { auth } from "@clerk/nextjs/server";
 import { Class, Teacher } from "@prisma/client";
 import { EditIcon, TrashIcon } from "lucide-react";
 
-type ClassItemProps = Class & { supervisor: Teacher};
+type ClassItemProps = Class & { supervisor: Teacher };
 
-function ClassItem(classItem: ClassItemProps) {
+async function ClassItem(classItem: ClassItemProps) {
+  const { sessionClaims } = await auth();
+  const role = (sessionClaims?.metadata as { role?: string })?.role;
   return (
     <TableRow key={classItem.id}>
       <TableCell>{classItem.name}</TableCell>
       <TableCell className="hidden md:table-cell">
         {classItem.capacity}
       </TableCell>
-      <TableCell className="hidden md:table-cell">{classItem.name[0]}</TableCell>
+      <TableCell className="hidden md:table-cell">
+        {classItem.name[0]}
+      </TableCell>
       <TableCell className="hidden md:table-cell">
         {classItem.supervisor.name + " " + classItem.supervisor.surname}
       </TableCell>
