@@ -1,13 +1,15 @@
 import FormModal from "@/components/FormModal";
 import { TableCell, TableRow } from "@/components/ui/table";
-import { role } from "@/constants/data";
+import { auth } from "@clerk/nextjs/server";
 import { Class, Student } from "@prisma/client";
 import { EditIcon, TrashIcon } from "lucide-react";
 import Image from "next/image";
 
 type StudentItemProps = Student & { class: Class };
 
-function StudentItem(student: StudentItemProps) {
+async function StudentItem(student: StudentItemProps) {
+  const { sessionClaims } = await auth();
+  const role = (sessionClaims?.metadata as { role?: string })?.role;
   return (
     <TableRow key={student.id}>
       <TableCell className="flex items-center gap-2">
