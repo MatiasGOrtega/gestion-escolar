@@ -6,7 +6,6 @@ import {
   SlidersHorizontalIcon,
 } from "lucide-react";
 import FormModal from "../FormModal";
-import { role } from "@/constants/data";
 
 type TableTopProps = {
   table:
@@ -23,9 +22,10 @@ type TableTopProps = {
     | "event"
     | "announcement";
   nameTable: string;
+  role?: string;
 };
 
-function TableTop({ table, nameTable }: TableTopProps) {
+function TableTop({ table, nameTable, role }: TableTopProps) {
   return (
     <div className="flex items-center justify-between">
       <h1 className="hidden md:block text-lg font-semibold">{nameTable}</h1>
