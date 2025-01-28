@@ -1,13 +1,17 @@
 import FormModal from "@/components/FormModal";
 import { TableCell, TableRow } from "@/components/ui/table";
-import { role } from "@/constants/data";
+import { auth } from "@clerk/nextjs/server";
 import { Class, Subject, Teacher } from "@prisma/client";
 import { EditIcon, TrashIcon } from "lucide-react";
 import Image from "next/image";
 
-type TeacherItemProps = Teacher & { subjects: Subject[] } & { classes: Class[] };
+type TeacherItemProps = Teacher & { subjects: Subject[] } & {
+  classes: Class[];
+};
 
-function TeacherItem(teacher: TeacherItemProps) {
+async function TeacherItem(teacher: TeacherItemProps) {
+  const { sessionClaims } = await auth();
+  const role = (sessionClaims?.metadata as { role?: string })?.role;
   return (
     <TableRow key={teacher.id}>
       <TableCell className="flex items-center gap-2">
@@ -23,14 +27,12 @@ function TeacherItem(teacher: TeacherItemProps) {
           <p className="text-xs text-gray-500">{teacher?.email}</p>
         </div>
       </TableCell>
+      <TableCell className="hidden md:table-cell">{teacher.username}</TableCell>
       <TableCell className="hidden md:table-cell">
-        {teacher.username}
+        {teacher.subjects.map((subject) => subject.name).join(", ")}
       </TableCell>
       <TableCell className="hidden md:table-cell">
-        {teacher.subjects.map((subject)=>subject.name).join(", ")}
-      </TableCell>
-      <TableCell className="hidden md:table-cell">
-        {teacher.classes.map((className)=>className.name).join(", ")}
+        {teacher.classes.map((className) => className.name).join(", ")}
       </TableCell>
       <TableCell className="hidden lg:table-cell">{teacher.phone}</TableCell>
       <TableCell className="hidden lg:table-cell">{teacher.address}</TableCell>
