@@ -12,8 +12,12 @@ import {
 } from "./ui/sidebar";
 import Image from "next/image";
 import { menuMainItems, menuOtherItems } from "@/constants/menu";
+import { currentUser } from "@clerk/nextjs/server";
 
-function AppSidebar() {
+async function AppSidebar() {
+  const user = await currentUser();
+  const role = user?.publicMetadata.role as string;
+
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
@@ -41,21 +45,25 @@ function AppSidebar() {
           <SidebarGroupLabel>MENU</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {menuMainItems.map((item) => (
-                <SidebarMenuItem key={item.label}>
-                  <SidebarMenuButton asChild>
-                    <Link href={item.href}>
-                      <Image
-                        src={item.icon}
-                        alt={item.label}
-                        width={20}
-                        height={20}
-                      />
-                      <span className="ml-4">{item.label}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {menuMainItems.map((item) => {
+                if (item.visible.includes(role)) {
+                  return (
+                    <SidebarMenuItem key={item.label}>
+                      <SidebarMenuButton asChild>
+                        <Link href={item.href}>
+                          <Image
+                            src={item.icon}
+                            alt={item.label}
+                            width={20}
+                            height={20}
+                          />
+                          <span className="ml-4">{item.label}</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  );
+                }
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
