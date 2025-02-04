@@ -54,7 +54,7 @@ async function AttendanceChart() {
     };
 
   resData.forEach((attendance) => {
-    const itemDay = new Date(attendance.date);
+    // const itemDay = new Date(attendance.date);
 
     if (dayOfWeek >= 1 && dayOfWeek <= 5) {
       const dayDame = daysOfWeek[dayOfWeek - 1];

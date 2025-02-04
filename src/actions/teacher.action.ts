@@ -113,7 +113,8 @@ export async function createTeacher(
   data: TeacherSchema
 ) {
   try {
-    const user = await clerkClient.users.createUser({
+    const client = await clerkClient();
+    const user = await client.users.createUser({
       username: data.username,
       password: data.password,
       firstName: data.name,
@@ -158,7 +159,9 @@ export async function updateTeacher(
     return { success: false, error: true };
   }
   try {
-    const user = await clerkClient.users.updateUser(data.id, {
+    const client = await clerkClient();
+
+    await client.users.updateUser(data.id, {
       username: data.username,
       ...(data.password !== "" && { password: data.password }),
       firstName: data.name,
@@ -202,7 +205,9 @@ export async function deleteTeacher(
 ) {
   const id = data.get("id") as string;
   try {
-    await clerkClient.users.deleteUser(id);
+    const client = await clerkClient();
+
+    await client.users.deleteUser(id);
 
     await prisma.teacher.delete({
       where: {

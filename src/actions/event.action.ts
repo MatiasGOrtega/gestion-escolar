@@ -102,7 +102,6 @@ export async function getEvents(
 }
 
 export async function getEventsFromCalendar(date: Date) {
-  console.log(new Date(date.setHours(0, 0, 0, 0)));
   const events = await prisma.event.findMany({
     where: {
       startTime: {

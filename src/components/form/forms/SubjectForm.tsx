@@ -9,8 +9,10 @@ import InputField from "../InputField";
 
 interface SubjectFormProps {
   type: "create" | "update";
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data?: any;
   setOpen: Dispatch<SetStateAction<boolean>>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   relatedData?: any;
 }
 

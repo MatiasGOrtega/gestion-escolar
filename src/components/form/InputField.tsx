@@ -4,6 +4,7 @@ import React from "react";
 type InputFieldProps = {
   label: string;
   type?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   register: any;
   name: string;
   defaultValue?: string;

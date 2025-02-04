@@ -6,6 +6,7 @@ async function UserCard({
 }: {
   type: "admin" | "teacher" | "student" | "parent";
 }) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const modelMap: Record<typeof type, any> = {
     admin: prisma.admin,
     teacher: prisma.teacher,

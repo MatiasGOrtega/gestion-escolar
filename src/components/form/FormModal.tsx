@@ -10,7 +10,6 @@ import {
 import dynamic from "next/dynamic";
 import clsx from "clsx";
 import { X } from "lucide-react";
-import Form from "./Form";
 import { useRouter } from "next/navigation";
 import { deleteSubject } from "@/actions/subject.actions";
 import { deleteClass } from "@/actions/class.action";
@@ -69,6 +68,7 @@ const forms: {
     setOpen: Dispatch<SetStateAction<boolean>>,
     type: "create" | "update",
     data?: Data,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     relatedData?: any
   ) => JSX.Element;
 } = {
@@ -129,6 +129,7 @@ type FormModalProps = {
     | "event"
     | "announcement";
   type: "create" | "update" | "delete";
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data?: any;
   id?: string | number;
   children?: React.ReactNode;
@@ -141,6 +142,7 @@ function FormModal({
   id,
   children,
   relatedData,
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 }: FormModalProps & { relatedData?: any }) {
   const bgColor =
     type === "create"

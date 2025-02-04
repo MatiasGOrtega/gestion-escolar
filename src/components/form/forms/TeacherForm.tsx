@@ -11,8 +11,10 @@ import { CldUploadWidget } from "next-cloudinary";
 
 interface TeacherFormProps {
   type: "create" | "update";
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data?: any;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   relatedData: any;
 }
 
@@ -25,6 +27,7 @@ function TeacherForm({ type, data, setOpen, relatedData }: TeacherFormProps) {
     resolver: zodResolver(teacherSchema),
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [img, setImg] = useState<any>();
 
   const [state, formAction] = useActionState(
