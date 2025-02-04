@@ -1,14 +1,47 @@
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { role } from "@/constants/data";
-import { CalendarDays, Mail, Phone, Syringe } from "lucide-react";
+import { CalendarDays, Edit, Mail, Phone, Syringe } from "lucide-react";
 import Image from "next/image";
-import FormModal from "../FormModal";
+import { UserSex } from "@prisma/client";
+import FormContainer from "../form/FormContainer";
 
-function CardStudentInfo() {
+type Student = {
+  name: string;
+  id: string;
+  username: string;
+  surname: string;
+  email: string | null;
+  phone: string | null;
+  address: string;
+  img: string | null;
+  bloodType: string;
+  sex: UserSex;
+  createdAt: Date;
+  parentId: string;
+  classId: number;
+  gradeId: number;
+  birthday: Date;
+  class: {
+    _count: {
+      lessons: number;
+    };
+    name: string;
+    id: number;
+    gradeId: number;
+    capacity: number;
+    supervisorId: string | null;
+  };
+};
+
+interface CardStudentInfoProps {
+  student: Student;
+  role: string | undefined;
+}
+
+function CardStudentInfo({ student, role }: CardStudentInfoProps) {
   return (
     <Card className="py-6 px-4 rounded-md flex-1 flex gap-2 border-none">
       <Image
-        src="https://images.pexels.com/photos/5414817/pexels-photo-5414817.jpeg?auto=compress&cs=tinysrgb&w=1200"
+        src={student.img || "/avatar-default.png"}
         alt=""
         width={144}
         height={144}
@@ -18,27 +51,12 @@ function CardStudentInfo() {
       <CardContent className="w-2/3 flex flex-col justify-between gap-4">
         <div className="flex items-center gap-4">
           <CardTitle className="text-2xl font-semibold">
-            Cameron Moran
+            {student.name + " " + student.surname}
           </CardTitle>
           {role === "admin" && (
-            <FormModal
-              table="student"
-              type="update"
-              data={{
-                id: 1,
-                username: "deanguerrero",
-                email: "deanguerrero@gmail.com",
-                password: "password",
-                firstName: "Dean",
-                lastName: "Guerrero",
-                phone: "+1 234 567 89",
-                address: "1234 Main St, Anytown, USA",
-                bloodType: "A+",
-                dateOfBirth: "2000-01-01",
-                sex: "male",
-                img: "https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=1200",
-              }}
-            />
+            <FormContainer table="student" type="update" data={student}>
+              <Edit className="w-5 h-5" />
+            </FormContainer>
           )}
         </div>
         <p className="text-sm text-gray-500">
@@ -47,19 +65,19 @@ function CardStudentInfo() {
         <div className="flex items-center justify-between gap-2 flex-wrap text-xs font-medium">
           <div className="w-full md:w-1/3 lg:w-full 2xl:w-1/3 flex items-center gap-2">
             <Syringe width={16} height={16} />
-            <span>A+</span>
+            <span>{student.bloodType}</span>
           </div>
           <div className="w-full md:w-1/3 lg:w-full 2xl:w-1/3 flex items-center gap-2">
             <CalendarDays width={16} height={16} />
-            <span>January 2025</span>
+            {new Intl.DateTimeFormat("en-GB").format(student.birthday)}
           </div>
           <div className="w-full md:w-1/3 lg:w-full 2xl:w-1/3 flex items-center gap-2">
             <Mail width={16} height={16} />
-            <span>user@gmail.com</span>
+            <span>{student.email || "-"}</span>
           </div>
           <div className="w-full md:w-1/3 lg:w-full 2xl:w-1/3 flex items-center gap-2">
             <Phone width={16} height={16} />
-            <span>+1 234 567</span>
+            <span>{student.phone || "-"}</span>
           </div>
         </div>
       </CardContent>

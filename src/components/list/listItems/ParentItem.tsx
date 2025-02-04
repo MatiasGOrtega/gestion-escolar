@@ -1,4 +1,4 @@
-import FormModal from "@/components/FormModal";
+import FormContainer from "@/components/form/FormContainer";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { auth } from "@clerk/nextjs/server";
 import { Parent, Student } from "@prisma/client";
@@ -25,12 +25,12 @@ async function ParentItem(parent: ParentItemProps) {
       <TableCell className="flex items-center gap-2">
         {role === "admin" && (
           <>
-            <FormModal table="parent" type="update" data={parent}>
+            <FormContainer table="parent" type="update" data={parent}>
               <EditIcon className="w-4 h-4" />
-            </FormModal>
-            <FormModal table="parent" type="delete" id={parent.id}>
+            </FormContainer>
+            <FormContainer table="parent" type="delete" id={parent.id}>
               <TrashIcon className="w-4 h-4" />
-            </FormModal>
+            </FormContainer>
           </>
         )}
       </TableCell>

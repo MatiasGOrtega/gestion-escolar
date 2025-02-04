@@ -1,4 +1,4 @@
-import FormModal from "@/components/FormModal";
+import FormContainer from "@/components/form/FormContainer";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { auth } from "@clerk/nextjs/server";
 import { Announcement, Class } from "@prisma/client";
@@ -22,12 +22,12 @@ async function AnnouncementItem(announcement: AnnouncementItemProps) {
       <TableCell className="flex items-center gap-2">
         {role === "admin" && (
           <>
-            <FormModal table="announcement" type="update" data={announcement}>
+            <FormContainer table="announcement" type="update" data={announcement}>
               <EditIcon className="w-4 h-4" />
-            </FormModal>
-            <FormModal table="announcement" type="delete" id={announcement.id}>
+            </FormContainer>
+            <FormContainer table="announcement" type="delete" id={announcement.id}>
               <TrashIcon className="w-4 h-4" />
-            </FormModal>
+            </FormContainer>
           </>
         )}
       </TableCell>

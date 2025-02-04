@@ -1,4 +1,4 @@
-import FormModal from "@/components/FormModal";
+import FormContainer from "@/components/form/FormContainer";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { auth } from "@clerk/nextjs/server";
 import { Class, Teacher } from "@prisma/client";
@@ -24,12 +24,12 @@ async function ClassItem(classItem: ClassItemProps) {
       <TableCell className="flex items-center gap-2">
         {role === "admin" && (
           <>
-            <FormModal table="class" type="update" data={classItem}>
-              <EditIcon className="w-4 h-4" />
-            </FormModal>
-            <FormModal table="class" type="delete" id={classItem.id}>
-              <TrashIcon className="w-4 h-4" />
-            </FormModal>
+            <FormContainer table="class" type="update" data={classItem}>
+              <EditIcon className="w-5 h-5" />
+            </FormContainer>
+            <FormContainer table="class" type="delete" id={classItem.id}>
+              <TrashIcon className="w-5 h-5" />
+            </FormContainer>
           </>
         )}
       </TableCell>

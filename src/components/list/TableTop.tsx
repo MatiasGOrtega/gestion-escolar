@@ -5,7 +5,7 @@ import {
   PlusIcon,
   SlidersHorizontalIcon,
 } from "lucide-react";
-import FormModal from "../FormModal";
+import FormContainer from "../form/FormContainer";
 
 type TableTopProps = {
   table:
@@ -32,16 +32,16 @@ function TableTop({ table, nameTable, role }: TableTopProps) {
       <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
         <TableSearch />
         <div className="flex items-center gap-4 self-end">
-          <Button variant="outline" size="icon">
-            <SlidersHorizontalIcon className="w-4 h-4" />
-          </Button>
-          <Button variant="outline" size="icon">
-            <ArrowDownWideNarrowIcon className="w-4 h-4" />
-          </Button>
+          <button className="shadow hover:shadow-md hover:bg-gray-100 rounded-md p-2">
+            <SlidersHorizontalIcon className="w-5 h-5" />
+          </button>
+          <button className="shadow hover:shadow-md hover:bg-gray-100 rounded-md p-2">
+            <ArrowDownWideNarrowIcon className="w-5 h-5" />
+          </button>
           {role === "admin" && (
-            <FormModal table={table} type="create">
-              <PlusIcon className="w-4 h-4" />
-            </FormModal>
+            <FormContainer table={table} type="create">
+              <PlusIcon className="w-5 h-5" />
+            </FormContainer>
           )}
         </div>
       </div>

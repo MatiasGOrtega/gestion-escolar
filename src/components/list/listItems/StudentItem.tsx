@@ -1,9 +1,10 @@
-import FormModal from "@/components/FormModal";
+import FormModal from "@/components/form/FormModal";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { auth } from "@clerk/nextjs/server";
 import { Class, Student } from "@prisma/client";
 import { EditIcon, TrashIcon } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 type StudentItemProps = Student & { class: Class };
 
@@ -34,9 +35,11 @@ async function StudentItem(student: StudentItemProps) {
       <TableCell className="flex items-center gap-2">
         {role === "admin" && (
           <>
-            <FormModal table="student" type="update" data={student}>
-              <EditIcon className="w-4 h-4" />
-            </FormModal>
+            <Link href={`/list/students/${student.id}`}>
+              <button className="flex bg-yellow-200 items-center justify-center shadow hover:shadow-md hover:bg-yellow-300 rounded-md p-2">
+                <EditIcon className="w-5 h-5" />
+              </button>
+            </Link>
             <FormModal table="student" type="delete" id={student.id}>
               <TrashIcon className="w-4 h-4" />
             </FormModal>

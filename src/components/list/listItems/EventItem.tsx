@@ -1,4 +1,4 @@
-import FormModal from "@/components/FormModal";
+import FormContainer from "@/components/form/FormContainer";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { auth } from "@clerk/nextjs/server";
 import { Class, Event } from "@prisma/client";
@@ -33,12 +33,12 @@ async function EventItem(event: EventItemProps) {
       <TableCell className="flex items-center gap-2">
         {role === "admin" && (
           <>
-            <FormModal table="event" type="update" data={event}>
+            <FormContainer table="event" type="update" data={event}>
               <EditIcon className="w-4 h-4" />
-            </FormModal>
-            <FormModal table="event" type="delete" id={event.id}>
+            </FormContainer>
+            <FormContainer table="event" type="delete" id={event.id}>
               <TrashIcon className="w-4 h-4" />
-            </FormModal>
+            </FormContainer>
           </>
         )}
       </TableCell>

@@ -1,6 +1,4 @@
-"use client"
-import { Ellipsis } from "lucide-react"
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
+import { Ellipsis } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -8,35 +6,73 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
+} from "@/components/ui/card";
+import AttendaceChartContainer from "./AttendaceChartContainer";
+import { prisma } from "@/lib/prisma";
 
-const chartData = [
-  { today: "Monday", present: 186, absent: 80 },
-  { today: "Tuesday", present: 305, absent: 200 },
-  { today: "Wednesday", present: 237, absent: 120 },
-  { today: "Thursday", present: 73, absent: 190 },
-  { today: "Friday", present: 209, absent: 130 },
-  { today: "Saturday", present: 214, absent: 140 },
-  { today: "Sunday", present: 214, absent: 140 },
-]
-const chartConfig = {
-  present: {
-    label: "Present",
-    color: "hsl(var(--chart-1))",
-  },
-  absent: {
-    label: "Absent",
-    color: "hsl(var(--chart-2))",
-  },
-} satisfies ChartConfig
+async function AttendanceChart() {
+  const today = new Date();
+  const dayOfWeek = today.getDay();
+  const daysSinceMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+  const lastMonday = new Date(today);
+  lastMonday.setDate(today.getDate() - daysSinceMonday);
+  const resData = await prisma.attendance.findMany({
+    where: {
+      date: {
+        gte: lastMonday,
+      },
+    },
+    select: {
+      date: true,
+      present: true,
+    },
+  });
 
-function AttendanceChart() {
+  const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+  const attendanceMap: { [key: string]: { present: number; absent: number } } =
+    {
+      Monday: {
+        present: 0,
+        absent: 0,
+      },
+      Tuesday: {
+        present: 0,
+        absent: 0,
+      },
+      Wednesday: {
+        present: 0,
+        absent: 0,
+      },
+      Thursday: {
+        present: 0,
+        absent: 0,
+      },
+      Friday: {
+        present: 0,
+        absent: 0,
+      },
+    };
+
+  resData.forEach((attendance) => {
+    const itemDay = new Date(attendance.date);
+
+    if (dayOfWeek >= 1 && dayOfWeek <= 5) {
+      const dayDame = daysOfWeek[dayOfWeek - 1];
+
+      if (attendance.present) {
+        attendanceMap[dayDame].present += 1;
+      } else {
+        attendanceMap[dayDame].absent += 1;
+      }
+    }
+  });
+
+  const data = daysOfWeek.map((day) => ({
+    today: day,
+    present: attendanceMap[day].present,
+    absent: attendanceMap[day].absent,
+  }));
+
   return (
     <Card className="flex flex-col p-4 w-full h-full border-none">
       <CardHeader className="flex flex-row justify-between items-center p-0">
@@ -46,24 +82,7 @@ function AttendanceChart() {
         </CardDescription>
       </CardHeader>
       <CardContent className="w-full h-full p-0">
-        <ChartContainer config={chartConfig} className="mx-auto w-full">
-          <BarChart accessibilityLayer data={chartData}>
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="today"
-              tickLine={false}
-              tickMargin={10}
-              axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
-            />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent indicator="dashed" />}
-            />
-            <Bar dataKey="present" fill="#fef08a" radius={4} />
-            <Bar dataKey="absent" fill="#bae6fd" radius={4} />
-          </BarChart>
-        </ChartContainer>
+        <AttendaceChartContainer data={data} />
       </CardContent>
       <CardFooter className="flex justify-center items-center gap-4">
         <div className="flex items-center gap-2">
@@ -76,7 +95,7 @@ function AttendanceChart() {
         </div>
       </CardFooter>
     </Card>
-  )
+  );
 }
 
-export default AttendanceChart
+export default AttendanceChart;

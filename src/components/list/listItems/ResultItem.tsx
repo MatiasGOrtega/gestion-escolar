@@ -1,4 +1,4 @@
-import FormModal from "@/components/FormModal";
+import FormContainer from "@/components/form/FormContainer";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { auth } from "@clerk/nextjs/server";
 import { EditIcon, TrashIcon } from "lucide-react";
@@ -35,12 +35,12 @@ async function ResultItem(result: ResultItemProps) {
       <TableCell className="flex items-center gap-2">
         {(role === "admin" || role === "teacher") && (
           <>
-            <FormModal table="result" type="update" data={result}>
+            <FormContainer table="result" type="update" data={result}>
               <EditIcon className="w-4 h-4" />
-            </FormModal>
-            <FormModal table="result" type="delete" id={result.id}>
+            </FormContainer>
+            <FormContainer table="result" type="delete" id={result.id}>
               <TrashIcon className="w-4 h-4" />
-            </FormModal>
+            </FormContainer>
           </>
         )}
       </TableCell>
