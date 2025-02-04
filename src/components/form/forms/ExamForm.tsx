@@ -4,7 +4,7 @@ import { createExam, updateExam } from "@/actions/exam.action";
 import { examSchema, ExamSchema } from "@/schemas/exam";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useActionState, useEffect } from "react";
+import { Dispatch, SetStateAction, useActionState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import InputField from "../InputField";
 
